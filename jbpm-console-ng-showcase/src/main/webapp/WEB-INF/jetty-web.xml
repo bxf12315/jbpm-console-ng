@@ -70,8 +70,8 @@
         <Set name="allowLocalTransactions">true</Set>
         <Get name="driverProperties">
           <Put name="user">sa</Put>
-          <Put name="password">sasa</Put>
-          <Put name="URL">jdbc:h2:~/jbpm-console-ng</Put>
+          <Put name="password">sa</Put>
+          <Put name="URL">jdbc:h2:tcp://localhost/~/jbpm-source-me/h2/jbpm-6.1</Put>
         </Get>
         <Call name="init"/>
       </New>
