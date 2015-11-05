@@ -96,6 +96,8 @@ public abstract class AbstractStartProcessFormDisplayer implements StartProcessF
     protected JSNIHelper jsniHelper;
 
 
+    private Button startButton;
+    
     @PostConstruct
     protected void init() {
         container.getElement().setId("form-data");
@@ -120,7 +122,7 @@ public abstract class AbstractStartProcessFormDisplayer implements StartProcessF
         correlationKey = new TextBox();
 
 
-        Button startButton = new Button(constants.Submit(), new ClickHandler() {
+        startButton = new Button(constants.Submit(), new ClickHandler() {
             @Override public void onClick(ClickEvent event) {
                 startProcessFromDisplayer();
             }
@@ -184,6 +186,7 @@ public abstract class AbstractStartProcessFormDisplayer implements StartProcessF
             sessionServices.call(getStartProcessRemoteCallback(), getUnexpectedErrorCallback())
                     .startProcess(deploymentId, processDefId, correlationKey.getValue(), params);
         }
+        startButton.setEnabled( false );
     }
 
     protected RemoteCallback<Long> getStartProcessRemoteCallback() {
