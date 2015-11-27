@@ -44,12 +44,12 @@ import org.gwtbootstrap3.client.ui.constants.ValidationState;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.security.shared.api.identity.User;
-import org.jbpm.console.ng.ga.forms.display.GenericFormDisplayer;
+import org.jbpm.console.ng.ga.forms.display.GeneriFormDisplayerPresenter;
 import org.jbpm.console.ng.ga.forms.display.view.FormContentResizeListener;
-import org.jbpm.console.ng.ga.forms.display.view.FormDisplayerView;
+import org.jbpm.console.ng.ga.forms.display.view.StartFormDisplayerView;
 import org.jbpm.console.ng.ga.model.PortableQueryFilter;
 import org.jbpm.console.ng.ga.model.QueryFilter;
-import org.jbpm.console.ng.pr.forms.client.display.displayers.process.AbstractStartProcessFormDisplayer;
+import org.jbpm.console.ng.pr.forms.client.display.displayers.process.AbstractStartProcessFormDisplayerPresenter;
 import org.jbpm.console.ng.pr.forms.client.display.providers.StartProcessFormDisplayProviderImpl;
 import org.jbpm.console.ng.pr.forms.client.i18n.Constants;
 import org.jbpm.console.ng.pr.forms.display.process.api.ProcessDisplayerConfig;
@@ -63,7 +63,7 @@ import org.uberfire.mvp.Command;
 import org.uberfire.workbench.events.NotificationEvent;
 
 @Dependent
-public class QuickNewProcessInstancePopup extends BaseModal implements FormDisplayerView {
+public class QuickNewProcessInstancePopup extends BaseModal implements StartFormDisplayerView {
 
     interface Binder
             extends
@@ -133,7 +133,7 @@ public class QuickNewProcessInstancePopup extends BaseModal implements FormDispl
 
     private boolean initialized = false;
 
-    private GenericFormDisplayer currentDisplayer;
+    private GeneriFormDisplayerPresenter currentDisplayer;
 
     private int initialWidth = -1;
 
@@ -308,18 +308,18 @@ public class QuickNewProcessInstancePopup extends BaseModal implements FormDispl
     }
 
     @Override
-    public void display( GenericFormDisplayer displayer ) {
+    public void display( GeneriFormDisplayerPresenter displayer ) {
         currentDisplayer = displayer;
 
         body.clear();
-        body.add( displayer.getContainer() );
-        ( (AbstractStartProcessFormDisplayer) displayer )
+        body.add( displayer.getView().getContainer() );
+        ( (AbstractStartProcessFormDisplayerPresenter) displayer ).getSpecificView()
                 .setParentProcessInstanceId( this.parentProcessInstanceId );
 
         removeFooter( this );
         footer = new GenericModalFooter();
-        if ( displayer.getOpener() == null ) {
-            footer.add( displayer.getFooter() );
+        if ( displayer.getView().getOpener() == null ) {
+            footer.add( displayer.getView().getFooter() );
         }
         add( footer );
 
@@ -365,7 +365,7 @@ public class QuickNewProcessInstancePopup extends BaseModal implements FormDispl
     }
 
     @Override
-    public GenericFormDisplayer getCurrentDisplayer() {
+    public GeneriFormDisplayerPresenter getCurrentDisplayer() {
         return currentDisplayer;
     }
 

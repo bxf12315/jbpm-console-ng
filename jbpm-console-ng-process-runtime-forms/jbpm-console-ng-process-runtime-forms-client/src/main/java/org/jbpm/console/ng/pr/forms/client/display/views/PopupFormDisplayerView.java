@@ -19,20 +19,21 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.ui.FlowPanel;
 import org.gwtbootstrap3.client.shared.event.ModalHiddenEvent;
 import org.gwtbootstrap3.client.shared.event.ModalHiddenHandler;
 import org.gwtbootstrap3.client.ui.ModalFooter;
+import org.jbpm.console.ng.ga.forms.display.GeneriFormDisplayerPresenter;
 import org.jbpm.console.ng.ga.forms.display.GenericFormDisplayer;
 import org.jbpm.console.ng.ga.forms.display.view.FormContentResizeListener;
-import org.jbpm.console.ng.ga.forms.display.view.FormDisplayerView;
+import org.jbpm.console.ng.ga.forms.display.view.StartFormDisplayerView;
 import org.jbpm.console.ng.pr.forms.display.process.api.StartProcessFormDisplayProvider;
 import org.uberfire.ext.widgets.common.client.common.popups.BaseModal;
 import org.uberfire.mvp.Command;
 
+import com.google.gwt.user.client.ui.FlowPanel;
+
 @Dependent
-public class PopupFormDisplayerView extends BaseModal implements FormDisplayerView {
+public class PopupFormDisplayerView extends BaseModal implements StartFormDisplayerView {
 
     @Inject
     private StartProcessFormDisplayProvider widgetPresenter;
@@ -49,7 +50,7 @@ public class PopupFormDisplayerView extends BaseModal implements FormDisplayerVi
 
     private ModalFooter footer = new ModalFooter();
 
-    private GenericFormDisplayer currentDisplayer;
+    private GeneriFormDisplayerPresenter currentDisplayer;
 
     private int initialWidth = -1;
 
@@ -89,7 +90,7 @@ public class PopupFormDisplayerView extends BaseModal implements FormDisplayerVi
     }
 
     @Override
-    public void display( GenericFormDisplayer displayer ) {
+    public void display( GeneriFormDisplayerPresenter displayer ) {
 //        setDataBackdrop( null );
 //        setDataKeyboard( true );
 //        setFade( true );
@@ -97,9 +98,9 @@ public class PopupFormDisplayerView extends BaseModal implements FormDisplayerVi
         currentDisplayer = displayer;
         body.clear();
         footer.clear();
-        body.add( displayer.getContainer() );
-        if ( displayer.getOpener() == null ) {
-            footer.add( displayer.getFooter() );
+        body.add( displayer.getView().getContainer() );
+        if ( displayer.getView().getOpener() == null ) {
+            footer.add( displayer.getView().getFooter() );
         }
         //centerVertically( getElement() );
         initialized = true;
@@ -136,7 +137,7 @@ public class PopupFormDisplayerView extends BaseModal implements FormDisplayerVi
     }
 
     @Override
-    public GenericFormDisplayer getCurrentDisplayer() {
+    public GeneriFormDisplayerPresenter getCurrentDisplayer() {
         return currentDisplayer;
     }
 }

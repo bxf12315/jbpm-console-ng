@@ -15,9 +15,9 @@
 
 package org.jbpm.console.ng.pr.forms.display.process.api;
 
-import org.jbpm.console.ng.ga.forms.display.view.FormDisplayerView;
+import org.jbpm.console.ng.ga.forms.display.view.StartFormDisplayerView;
 
 public interface StartProcessFormDisplayProvider {
 
-    void setup(ProcessDisplayerConfig config, FormDisplayerView view);
+    void setup(ProcessDisplayerConfig config, StartFormDisplayerView view);
 }
